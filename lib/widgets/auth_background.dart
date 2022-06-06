@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AutoBackground extends StatelessWidget {
-  const AutoBackground({Key? key}) : super(key: key);
+
+  final Widget child;
+
+  const AutoBackground({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,12 +13,31 @@ class AutoBackground extends StatelessWidget {
       height: double.infinity,
       child: Stack(
         children: [
-          _PurpleBox()
+          _PurpleBox(),
+
+          _HeaderIcon(),
+
+          this.child
+
+
         ],
       ),
 
     );
     
+  }
+}
+
+class _HeaderIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 30),
+        child: Icon(Icons.person_pin, color: Colors.white, size: 100,),
+      ),
+    );
   }
 }
 
