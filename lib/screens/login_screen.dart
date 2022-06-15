@@ -16,14 +16,14 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 250,),
+              const SizedBox(height: 250,),
 
               CardContainer(
                 child:Column(
                   children: [
-                    SizedBox(height: 10,),
+                   const SizedBox(height: 10,),
                     Text('Login', style: Theme.of(context).textTheme.headline4,),
-                    SizedBox(height: 30,),
+                   const SizedBox(height: 30,),
 
 
 
@@ -36,9 +36,9 @@ class LoginScreen extends StatelessWidget {
                 ),
                 
                 ),
-                SizedBox(height: 50),
-                Text('Crear una nueva cuenta.', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                SizedBox(height: 50),
+               const SizedBox(height: 50),
+               const Text('Crear una nueva cuenta.', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+               const SizedBox(height: 50),
             ],
           ),
         ))
@@ -53,7 +53,7 @@ class _LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     
   final loginForm  = Provider.of<LoginFormProvider>(context);
-    return Container(
+    return  Container(
            child: Form(
              key: loginForm.formkey,
              autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -77,7 +77,7 @@ class _LoginForm extends StatelessWidget {
                           : 'Debe ser formato correo';
                         },
                     ),
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
                      TextFormField(
                       autocorrect: false,
                       obscureText: true,
@@ -95,7 +95,7 @@ class _LoginForm extends StatelessWidget {
                           :'La contraseña debe ser de 6 caracteres';
                         },
                     ),
-                    SizedBox(height: 30,),
+                   const SizedBox(height: 30,),
 
                     MaterialButton(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
