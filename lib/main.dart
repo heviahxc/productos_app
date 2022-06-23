@@ -10,10 +10,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
       title: 'Productos App',
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
         'login': (_) => const LoginScreen(),
-        'home': (_) => const HomeScreen()
+        'home': (_) => const HomeScreen(),
+        'product': (_) => const ProductScreen()
       },
     theme: ThemeData.light().copyWith(
       scaffoldBackgroundColor: Colors.grey[300],

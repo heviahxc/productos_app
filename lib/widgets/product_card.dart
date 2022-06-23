@@ -25,9 +25,7 @@ class ProductCard extends StatelessWidget {
             Positioned(
               top: 0,
               left: 0,
-              child: _NotAvailable()),
-
-              
+              child: _NotAvailable()), 
           ],
         ),
       ),
