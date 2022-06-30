@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:productos_app/models/models.dart';
 
 class ProductCard extends StatelessWidget {
   
+  final Product product;
+
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +19,16 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
-            _BackgroundImage(),
+            _BackgroundImage(url: product.picture),
 
-            _ProductDetails(),
+            _ProductDetails(name: product.name, id: product.id,),
+
+
             Positioned(
               top: 0,
               right: 0,
-              child: _PriceTag()),
+              child: _PriceTag(price: product.price)),
+              if(!product.available)
             Positioned(
               top: 0,
               left: 0,
@@ -46,7 +53,6 @@ class ProductCard extends StatelessWidget {
 }
 
 class _NotAvailable extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +79,10 @@ class _NotAvailable extends StatelessWidget {
 
 class _PriceTag extends StatelessWidget {
 
+  final double price;
+
+  const _PriceTag({super.key, required this.price});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,7 +91,7 @@ class _PriceTag extends StatelessWidget {
         fit: BoxFit.contain,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text('\$50.000', style: TextStyle(color: Colors.white, fontSize: 20),)),
+          child: Text('\$$price', style: TextStyle(color: Colors.white, fontSize: 20),)),
       ),
       width: 100,
       height: 70,
@@ -96,6 +106,11 @@ class _PriceTag extends StatelessWidget {
 
 class _ProductDetails extends StatelessWidget {
 
+  final name;
+  final id;
+
+  const _ProductDetails({super.key, required this.name, required this.id});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -107,12 +122,12 @@ class _ProductDetails extends StatelessWidget {
         decoration: _buildBoxDecoration(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text('Disco duro', 
+          children:  [
+            Text(name, 
             style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,),
-             Text('Id de Disco duro', 
+             Text(id, 
             style: TextStyle(fontSize: 15, color: Colors.white),
           ),
     
@@ -131,6 +146,9 @@ class _ProductDetails extends StatelessWidget {
 
 class _BackgroundImage extends StatelessWidget {
 
+final String? url;
+
+  const _BackgroundImage({super.key, this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +159,7 @@ class _BackgroundImage extends StatelessWidget {
         height: 400,
         child: FadeInImage(
           placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6'),
+          image: NetworkImage(url!),
           fit: BoxFit.cover,
          ),
       ),
