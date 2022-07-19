@@ -16,7 +16,7 @@ class ProductScreen extends StatelessWidget {
     final productService = Provider.of<ProductsService>(context);
 
     return ChangeNotifierProvider(create: (_) => ProductFormProvider( productService.selectedProduct),
-    child: _ProductScreenBody(ProductService: productService),);
+    child: _ProductScreenBody(productService: productService),);
     //return _ProductScreenBody(ProductService: ProductService);
   }
 }
@@ -24,13 +24,14 @@ class ProductScreen extends StatelessWidget {
 class _ProductScreenBody extends StatelessWidget {
   const _ProductScreenBody({
     Key? key,
-    required this.ProductService,
+    required this.productService,
   }) : super(key: key);
 
-  final ProductsService ProductService;
+  final ProductsService productService;
 
   @override
   Widget build(BuildContext context) {
+    final productForm = Provider.of<ProductFormProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -38,7 +39,7 @@ class _ProductScreenBody extends StatelessWidget {
           children: [
             Stack(
               children: [
-                ProductImage(url: ProductService.selectedProduct.picture,),
+                ProductImage(url: productService.selectedProduct.picture,),
                 Positioned(
                   top: 60,
                   left: 20,
@@ -69,7 +70,10 @@ class _ProductScreenBody extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.save_outlined),
-        onPressed: (){}
+        onPressed: (){
+         if (!productForm.isValidForm()) return;
+         productService.saveOrCreateProduct(productForm.product);
+        }
       ),
     );
   }
@@ -92,6 +96,8 @@ class _ProductForm extends StatelessWidget {
         height: 280,
         decoration: _buildBoxDecoration(),
         child: Form(
+          key: productForm.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               SizedBox(height: 10,),
