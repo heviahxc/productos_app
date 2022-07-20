@@ -5,6 +5,7 @@ import 'package:productos_app/services/services.dart';
 import 'package:productos_app/ui/input_decoration.dart';
 import 'package:productos_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProductScreen extends StatelessWidget {
    
@@ -52,8 +53,14 @@ class _ProductScreenBody extends StatelessWidget {
                   top: 60,
                   right: 20,
                   child: IconButton(
-                    onPressed: (){
-                      
+                    onPressed: () async{
+                      final picker = new ImagePicker();
+                      final PickedFile? pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+                      if(pickedFile == null){
+                        return;
+                      }
+                      productService.updateSelectedProductImage(pickedFile.path);
                     },
                      icon: const Icon(Icons.camera_alt_outlined, size: 40, color: Colors.black),
                      )
@@ -69,10 +76,17 @@ class _ProductScreenBody extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save_outlined),
-        onPressed: (){
+        child: productService.isSaving
+        ? CircularProgressIndicator(color: Colors.white,)
+        : const Icon(Icons.save_outlined),
+        onPressed: productService.isSaving
+          ? null
+          : ()async{
          if (!productForm.isValidForm()) return;
-         productService.saveOrCreateProduct(productForm.product);
+         final String? imageUrl = await productService.uploadImage();
+
+         if(imageUrl != null) productForm.product.picture = imageUrl;
+         await productService.saveOrCreateProduct(productForm.product);
         }
       ),
     );

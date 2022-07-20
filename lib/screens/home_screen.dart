@@ -31,7 +31,14 @@ class HomeScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: (){},
+          onPressed: (){
+
+            productsService.selectedProduct = new Product(
+            available: false, 
+            name: '', 
+            price: 0);
+            Navigator.pushNamed(context, 'product');
+          },
         ),
     );
   }
