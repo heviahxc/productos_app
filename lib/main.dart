@@ -12,6 +12,7 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers:[
+          ChangeNotifierProvider(create: (_) => AuthService()), 
           ChangeNotifierProvider(create: (_) => ProductsService())
       ],
       child: MyApp(),
@@ -26,9 +27,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
       title: 'Productos App',
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: {
         'login': (_) =>  LoginScreen(),
+        'register': (_) =>  RegisterScreen(),
         'home': (_) =>  HomeScreen(),
         'product': (_) =>  ProductScreen()
       },
